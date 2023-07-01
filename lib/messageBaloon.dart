@@ -18,7 +18,7 @@ class MessageBalloon extends StatelessWidget {
       margin: const EdgeInsets.all(15.0),
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Colors.blue,
+        color: Colors.green.shade400,
         borderRadius: BorderRadius.circular(10.0), // Köşeleri yuvarlatma
       ),
       child: Padding(

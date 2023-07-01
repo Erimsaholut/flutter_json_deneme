@@ -12,11 +12,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const MyHomePage(),
+    return const MaterialApp(
+      home: MyHomePage(),
     );
   }
 }
@@ -39,17 +36,17 @@ class _MyHomePageState extends State<MyHomePage> {
     for (var dialog in dialogs) {
       persons.add(dialog['isim']);
     }
-
   }
 
   void printItemDescription(String id) {
     dynamic item =
-    dialogs.firstWhere((item) => item['isim'] == id, orElse: () => null);
+        dialogs.firstWhere((item) => item['isim'] == id, orElse: () => null);
     if (item != null) {
       setState(() {
         String description = item['message'];
         String numara = item['numara'];
-        baloons.add(MessageBalloon(isim: id, telNo: numara, message: description));
+        baloons
+            .add(MessageBalloon(isim: id, telNo: numara, message: description));
       });
     }
   }
@@ -75,23 +72,55 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.grey,
-        title: const Text('Messages'),
+        backgroundColor: Colors.green,
+        title: const Text('Matssapp'),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            TextButton(
-              onPressed: () {
-                printItemDescription(persons[personTurn % persons.length]);
-                personTurn++;
-              },
-              child: const Text("NewMessage"),
-            ),
-            ...baloons,
-          ],
-        ),
+      body: Container(
+        decoration: BoxDecoration(color: Colors.green.shade200),
+        child: ListView(children: [
+          Column(
+            children: [
+              const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.green),
+                    ),
+                    onPressed: () {
+                      printItemDescription(
+                          persons[personTurn % persons.length]);
+                      personTurn++;
+                    },
+                    child: const Text(
+                      "New message",
+                      style: TextStyle(color: Colors.black87, fontSize: 20),
+                    ),
+                  ),
+                  TextButton(
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Colors.green),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        baloons.clear();
+                        personTurn = 0;
+                      });
+                    },
+                    child: const Text(
+                      "Reset Chat",
+                      style: TextStyle(color: Colors.black87, fontSize: 20),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          ...baloons,
+        ]),
       ),
     );
   }
